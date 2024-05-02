@@ -51,6 +51,15 @@ body {
 }
 
 
+.framed-text {
+    border: 2px solid black; /* Define the border: thickness, style, and color */
+    padding: 10px; /* Add padding inside the border for spacing */
+    border-radius: 5px; /* Optional: Add rounded corners to the border */
+    /* You can add more styles like background color if you want */
+    background-color: #f0f0f0;
+}
+
+
 /* Styling the footer */
 footer {
     background-color: #333; /* Dark gray background */
