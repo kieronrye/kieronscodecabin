@@ -50,11 +50,7 @@ body {
   flex: 1;
 }
 
-.framed-text {
-    border: 2px dotted red; /* Try a different style and color */
-    padding: 10px;
-    border-radius: 5px;
-}
+
 
 .boxed {
     border: 2px solid black; /* Adjust the border thickness and color */
