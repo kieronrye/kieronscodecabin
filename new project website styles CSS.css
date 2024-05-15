@@ -56,7 +56,12 @@ body {
     border-radius: 5px;
 }
 
-
+.boxed {
+    border: 2px solid black; /* Adjust the border thickness and color */
+    padding: 10px;           /* Adds space between the text and the border */
+    margin: 20px;            /* Adds space outside the border */
+    width: fit-content;      /* Ensures the box fits the content */
+}
 
 
 /* Styling the footer */
