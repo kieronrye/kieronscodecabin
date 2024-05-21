@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kieron's Website</title>
+    <link rel="stylesheet" href="new project website styles CSS.css">
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>Projects</h1>
+        <h2>I make stuff, I post stuff.</h2>
+    </header>
+    <nav>
+        <ul>
+<span style="font-size: larger;">            <li><a href="index.html">Home</a></li></span>
+<span style="font-size: larger;">            <li><a href="aboutmepage.html">About Me</a></li></span>
+<span style="font-size: larger;">            <li><a href="blogpage.html">Blog</a></li></span>
+  <span style="font-size: larger;">            <li><a href="">Projects</a></li></span>         
+        </ul>
+    </nav>
+    <main>
+        <section>
+           
+            
+        </section>
+        <section>
+            <h2>The code cabin website</h2>
+            <p>I embarked on creating my personal website in early April 2024, driven by a desire to establish an <br>
+            personal alternative to Facebook. Opting against the quick drag-and-drop starter sites due to finding <br>
+            them overly simplistic and expensive, I sought a more hands-on approach.</p>
+<p>Turning to ChatGPT for assistance, I generated HTML code for my personal site and delved into <br>
+learning about CSS style sheets to add flair and individuality. Over the following week, I dedicated <br>
+myself to a mobile app HTML basics course, honing my skills.</p>
+<p>Armed with newfound knowledge, I set out to build the site according to my vision. Originally, I <br>
+aimed to host it on a homemade server, but with the server still in the planning stages, I pivoted to <br>
+using GitHub Pages. By leveraging this platform and making my code open source, I eliminated <br>
+hosting costs and ensured accessibility for all.</p>
+<p><b>Update</b><br>
+    I purchased a domain name from Namecheap an American domain registry company<br>
+    I learnt that i needed to pay for a DNS too, I didn't actually know what this was so this was a new experience and fun.<p/>
+    <br>
+<p><h2>Future projects to come.</h2><br>
+Retro pi game emulator <br>
+The live feed bird cam.</p>
+
+        </section>
+
+
+
+    </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+</body>
+</html>
