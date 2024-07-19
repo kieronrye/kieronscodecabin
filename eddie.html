@@ -11,22 +11,35 @@
     margin: 0;
     background-color: #f0f0f0;
     color: #333;
+    background: linear-gradient(45deg, #ff9500, #ff5500, #ff4500, #ff6500);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
   }
+
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
   .header {
     width: 100%;
-    background: #ff5500;
+    background: rgba(255, 85, 0, 0.9);
     color: #fff;
     padding: 20px;
     text-align: center;
   }
+
   .header__logo {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .header__logo img {
     height: 50px;
   }
+
   .profile {
     max-width: 800px;
     margin: 20px auto;
@@ -35,17 +48,22 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
   }
+
   .profile img {
     border-radius: 50%;
     width: 150px;
     height: 150px;
   }
+
   .profile h1 {
     margin: 10px 0;
+    color: #ff4500;
   }
+
   .profile p {
     color: #666;
   }
+
   .music-links {
     list-style: none;
     padding: 0;
@@ -53,6 +71,7 @@
     justify-content: center;
     gap: 15px;
   }
+
   .music-links a {
     text-decoration: none;
     color: #ff5500;
