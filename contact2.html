@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me - Kieron's Website</title>
+    <style>
+        /* Teletext Style CSS */
+        body {
+            background-color: black;
+            color: #00ff00; /* Bright green text */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 4px solid #ff00ff; /* Pink border */
+        }
+
+        header h1, header h2 {
+            color: #ff00ff; /* Pink headers */
+            text-transform: uppercase;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+
+        main h2 {
+            color: #ff0000; /* Red section titles */
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        main p {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        form label {
+            margin-bottom: 5px;
+            color: #00ffff; /* Cyan for form labels */
+        }
+
+        form input[type="text"], form input[type="email"], form textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #ff00ff;
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #ff0000; /* Red button */
+            color: black;
+            font-family: 'Courier New', Courier, monospace;
+            border: 2px solid #ff00ff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        form button:hover {
+            background-color: #00ff00; /* Green hover effect */
+            color: black;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: #00ffff; /* Cyan footer text */
+            border-top: 2px solid #00ffff;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Contact Me</h1>
+            <h2>Hey! I'm Now Contactable.</h2>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="page2.html">About Me</a></li>
+                <li><a href="page3.html">Blog</a></li>
+                <li><a href="page4.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section>
+                <form action="https://formspree.io/f/xjvnjjjg" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+
+            <section>
+                <h2>This Actually Works</h2>
+                <p>Well, of course, it should work, but it took some doing. Hosting on GitHub Pages had some limitations, so I’ve had to opt for using a third-party service from Formspree.<br>So go ahead, give me a shout!</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 My Website</p>
+        </footer>
+    </div>
+</body>
+</html>
