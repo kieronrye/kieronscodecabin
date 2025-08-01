@@ -1,6 +1,6 @@
 page numbering guide:
 
-home page is index.html
-
-about me is aboutmepage.htmp
+>home page is index.html
+>about me is aboutmepage.htmp
 >contact me is contactmepage.html
+
