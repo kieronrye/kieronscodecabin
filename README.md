@@ -1,7 +1,6 @@
 page numbering guide:
 
-home page
-about me
-blog
-projects
-contact me
+home page is index.html
+
+about me is aboutmepage.htmp
+>contact me is contactmepage.html
