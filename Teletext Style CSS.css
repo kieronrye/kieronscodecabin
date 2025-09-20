@@ -62,8 +62,3 @@ footer {
     color: #00ffff; /* Cyan footer text */
     border-top: 2px solid #00ffff;
     padding-top: 10px;
-}
-nav ul li a.active {
-  text-decoration: underline;
-  font-weight: bold; /* optional, makes it stand out more */
-}
