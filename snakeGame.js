@@ -3,7 +3,7 @@ window.onload = function() {
     canvas = document.getElementById("gameCanvas");
     context = canvas.getContext("2d");
     document.addEventListener("keydown", keyPush);
-    setInterval(snakeGame, 1000/15);
+    setInterval(snakeGame, 1000/5);
 }
 
 // Variable for position, speed, tail of snake and apple
