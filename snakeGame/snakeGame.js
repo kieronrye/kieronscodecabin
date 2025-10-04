@@ -25,11 +25,11 @@ let lastScore = 0;
 const music = document.getElementById("gameMusic");
 let musicStarted = false;
 
-// Win music
-const winMusic = new Audio("snakeGame/sounds/oasis.mp3");
+// ✅ Use correct relative path for win music
+const winMusic = new Audio("sounds/oasis.mp3");
+winMusic.volume = 0.8; // optional
 
 function snakeGame() {
-    // If game is completed, freeze everything
     if (isGameCompleted) {
         drawGame();
         return;
@@ -52,7 +52,7 @@ function snakeGame() {
             appleX = Math.floor(Math.random() * numTiles);
             appleY = Math.floor(Math.random() * numTiles);
 
-            // ✅ Check for game completion
+            // ✅ Trigger completion
             if (score >= 20) {
                 completeGame();
                 return;
@@ -82,7 +82,6 @@ function snakeGame() {
     drawGame();
 }
 
-// Draw game board and UI
 function drawGame() {
     context.fillStyle = "black";
     context.fillRect(0, 0, 400, 400);
@@ -99,22 +98,22 @@ function drawGame() {
         context.fillRect(appleX * gridSize, appleY * gridSize, gridSize - 2, gridSize - 2);
     }
 
-    // Draw score
+    // Score display
     context.fillStyle = "#ff00ff";
     context.font = "20px monospace";
     context.fillText("Score: " + score, 10, 30);
 
-    // Game completed
+    // Completion message
     if (isGameCompleted) {
         context.fillStyle = "#ff00ff";
         context.font = "25px monospace";
         context.fillText("YOU COMPLETED THE GAME!", 25, 200);
         context.font = "18px monospace";
-        context.fillText("Press any arrow key to play again", 40, 230);
+        context.fillText("Press an arrow key to play again", 40, 230);
         return;
     }
 
-    // Paused or score message
+    // Pause / Death message
     if (isPaused) {
         context.fillStyle = "#ff00ff";
         context.font = "25px monospace";
@@ -129,61 +128,60 @@ function drawGame() {
     }
 }
 
-// Handle keyboard input
 function keyPush(evt) {
     const arrowKeys = [37, 38, 39, 40];
 
-    // Arrow key pressed
     if (arrowKeys.includes(evt.keyCode)) {
-        // Restart if game completed
+        // Restart after win
         if (isGameCompleted) {
             resetGame();
             return;
         }
 
-        // If game was paused after death → reset game
+        // Restart after death
         if (isPaused && lastScore > 0) {
             resetGame();
         }
 
-        // If game is paused (manual pause or after death), unpause
+        // Unpause
         if (isPaused) {
             isPaused = false;
             playMusic();
         }
 
-        // Move snake
+        // Movement
         switch (evt.keyCode) {
-            case 37: velX = -1; velY = 0; break; // Left
-            case 38: velX = 0; velY = -1; break; // Up
-            case 39: velX = 1; velY = 0; break;  // Right
-            case 40: velX = 0; velY = 1; break;  // Down
+            case 37: velX = -1; velY = 0; break;
+            case 38: velX = 0; velY = -1; break;
+            case 39: velX = 1; velY = 0; break;
+            case 40: velX = 0; velY = 1; break;
         }
 
-        // Start music on first movement
         if (!musicStarted) {
             playMusic();
             musicStarted = true;
         }
     }
 
-    // Space bar toggles pause
+    // Space = pause toggle
     if (evt.keyCode === 32 && !isGameCompleted) {
         isPaused = !isPaused;
-        if (isPaused) {
-            pauseMusic();
-        } else {
-            playMusic();
-        }
+        if (isPaused) pauseMusic();
+        else playMusic();
     }
 }
 
-// Complete the game
+// ✅ Handles win condition
 function completeGame() {
     isGameCompleted = true;
     velX = velY = 0;
     pauseMusic();
-    winMusic.play().catch(err => console.log("Autoplay blocked:", err));
+
+    // Small delay to ensure clean switch from bg music
+    setTimeout(() => {
+        winMusic.currentTime = 0;
+        winMusic.play().catch(err => console.log("Autoplay blocked:", err));
+    }, 300);
 }
 
 // Reset game
@@ -202,7 +200,7 @@ function resetGame() {
     playMusic();
 }
 
-// Music helper functions
+// Music controls
 function playMusic() {
     if (music.paused) {
         music.play().catch(err => console.log("Autoplay blocked:", err));
