@@ -21,8 +21,8 @@ let score = 0;
 let lastScore = 0; // Stores score when player dies
 
 // Music control
-let musicStarted = false;
 const music = document.getElementById("gameMusic");
+let musicStarted = false;
 
 function snakeGame() {
     if (!isPaused) {  // Only update game if not paused
@@ -58,6 +58,7 @@ function snakeGame() {
                 tail = 5;
                 velX = velY = 0;
                 isPaused = true;
+                pauseMusic(); // Stop music when dead
                 break;
             }
         }
@@ -108,9 +109,10 @@ function keyPush(evt) {
             resetGame();
         }
 
-        // If game is paused (manual pause), unpause
+        // If game is paused (manual or after death), unpause and start music
         if (isPaused) {
             isPaused = false;
+            playMusic();
         }
 
         // Move snake
@@ -120,17 +122,22 @@ function keyPush(evt) {
             case 39: velX = 1; velY = 0; break;  // Right
             case 40: velX = 0; velY = 1; break;  // Down
         }
+
+        // Start music on first movement
+        if (!musicStarted) {
+            playMusic();
+            musicStarted = true;
+        }
     }
 
     // Space bar toggles pause
     if (evt.keyCode === 32) {
         isPaused = !isPaused;
-    }
-
-    // Start music on first movement (ignore space bar)
-    if (!musicStarted && evt.keyCode !== 32) {
-        music.play().catch(err => console.log("Autoplay blocked:", err));
-        musicStarted = true;
+        if (isPaused) {
+            pauseMusic();
+        } else {
+            playMusic();
+        }
     }
 }
 
@@ -146,4 +153,18 @@ function resetGame() {
     score = 0;
     lastScore = 0;
     isPaused = false;
+    playMusic();
+}
+
+// Music helper functions
+function playMusic() {
+    if (music.paused) {
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+    }
+}
+
+function pauseMusic() {
+    if (!music.paused) {
+        music.pause();
+    }
 }
