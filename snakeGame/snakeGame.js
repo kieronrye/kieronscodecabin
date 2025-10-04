@@ -15,21 +15,47 @@ let velX = 0, velY = 0;
 let trail = [];
 let tail = 5;
 
+// Pause state
+let isPaused = false;
+
 // Music control
 let musicStarted = false;
 const music = document.getElementById("gameMusic");
 
 function snakeGame() {
-    posX += velX;
-    posY += velY;
+    if (!isPaused) {  // Only update game if not paused
+        posX += velX;
+        posY += velY;
 
-    // Wrap around edges
-    if (posX < 0) posX = numTiles - 1;
-    if (posX > numTiles - 1) posX = 0;
-    if (posY < 0) posY = numTiles - 1;
-    if (posY > numTiles - 1) posY = 0;
+        // Wrap around edges
+        if (posX < 0) posX = numTiles - 1;
+        if (posX > numTiles - 1) posX = 0;
+        if (posY < 0) posY = numTiles - 1;
+        if (posY > numTiles - 1) posY = 0;
 
-    // Draw game board
+        // Eat apple → grow
+        if (appleX === posX && appleY === posY) {
+            tail++;
+            appleX = Math.floor(Math.random() * numTiles);
+            appleY = Math.floor(Math.random() * numTiles);
+        }
+
+        // Move snake trail
+        trail.push({ x: posX, y: posY });
+        while (trail.length > tail) {
+            trail.shift();
+        }
+
+        // Check self-collision
+        for (let i = 0; i < trail.length - 1; i++) {
+            if (trail[i].x === posX && trail[i].y === posY) {
+                tail = 5; // Reset snake length
+                velX = velY = 0; // Stop movement
+            }
+        }
+    }
+
+    // Draw game board (always draw so last frame remains visible)
     context.fillStyle = "black";
     context.fillRect(0, 0, 400, 400);
 
@@ -37,33 +63,18 @@ function snakeGame() {
     context.fillStyle = "lime";
     for (let i = 0; i < trail.length; i++) {
         context.fillRect(trail[i].x * gridSize, trail[i].y * gridSize, gridSize - 2, gridSize - 2);
-
-        // If snake eats itself → reset
-        if (trail[i].x === posX && trail[i].y === posY) {
-            tail = 5;
-
-            // Optional: stop music on collision
-            // music.pause();
-            // music.currentTime = 0;
-            // musicStarted = false;
-        }
-    }
-    trail.push({ x: posX, y: posY });
-
-    while (trail.length > tail) {
-        trail.shift();
-    }
-
-    // Eat apple → grow
-    if (appleX === posX && appleY === posY) {
-        tail++;
-        appleX = Math.floor(Math.random() * numTiles);
-        appleY = Math.floor(Math.random() * numTiles);
     }
 
     // Draw apple
     context.fillStyle = "red";
     context.fillRect(appleX * gridSize, appleY * gridSize, gridSize - 2, gridSize - 2);
+
+    // Optional: Display "PAUSED" text
+    if (isPaused) {
+        context.fillStyle = "#ff00ff";
+        context.font = "30px monospace";
+        context.fillText("PAUSED", 120, 200);
+    }
 }
 
 // Handle keyboard input
@@ -73,10 +84,13 @@ function keyPush(evt) {
         case 38: velX = 0; velY = -1; break; // Up
         case 39: velX = 1; velY = 0; break;  // Right
         case 40: velX = 0; velY = 1; break;  // Down
+        case 32:  // Space bar toggles pause
+            isPaused = !isPaused;
+            break;
     }
 
     // Start music on first movement
-    if (!musicStarted) {
+    if (!musicStarted && evt.keyCode !== 32) { // Ignore space bar for music start
         music.play().catch(err => console.log("Autoplay blocked:", err));
         musicStarted = true;
     }
