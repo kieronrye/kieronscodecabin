@@ -18,6 +18,7 @@ let tail = 5;
 // Game state
 let isPaused = false;
 let score = 0;
+let lastScore = 0; // Stores score when player dies
 
 // Music control
 let musicStarted = false;
@@ -51,11 +52,11 @@ function snakeGame() {
         // Check self-collision
         for (let i = 0; i < trail.length - 1; i++) {
             if (trail[i].x === posX && trail[i].y === posY) {
-                // Snake died → reset tail, score, and pause
+                // Snake died → save score, reset tail, pause game
+                lastScore = score; // Save the score before resetting
                 tail = 5;
                 velX = velY = 0;
-                score = 0;      // Reset score
-                isPaused = true; // Pause game
+                isPaused = true;
                 break;
             }
         }
@@ -80,36 +81,48 @@ function snakeGame() {
     context.font = "20px monospace";
     context.fillText("Score: " + score, 10, 30);
 
-    // Draw "PAUSED" if game is paused
+    // Draw "PAUSED" or "YOUR SCORE IS ..." if game is paused after death
     if (isPaused) {
         context.fillStyle = "#ff00ff";
-        context.font = "30px monospace";
-        context.fillText("PAUSED", 120, 200);
+        context.font = "25px monospace";
+
+        if (lastScore > 0) {
+            context.fillText("YOUR SCORE IS " + lastScore, 80, 200);
+        } else {
+            context.fillText("PAUSED", 150, 200);
+        }
     }
 }
 
 // Handle keyboard input
 function keyPush(evt) {
-    switch (evt.keyCode) {
-        case 37: // Left
-            velX = -1; velY = 0;
-            if (isPaused) isPaused = false; // Unpause
-            break;
-        case 38: // Up
-            velX = 0; velY = -1;
-            if (isPaused) isPaused = false; // Unpause
-            break;
-        case 39: // Right
-            velX = 1; velY = 0;
-            if (isPaused) isPaused = false; // Unpause
-            break;
-        case 40: // Down
-            velX = 0; velY = 1;
-            if (isPaused) isPaused = false; // Unpause
-            break;
-        case 32: // Space bar toggles pause
-            isPaused = !isPaused;
-            break;
+    const arrowKeys = [37, 38, 39, 40];
+
+    if (arrowKeys.includes(evt.keyCode)) {
+        // If game was paused after death, reset the game
+        if (isPaused && lastScore > 0) {
+            score = 0;
+            trail = [];
+            posX = 10;
+            posY = 10;
+            tail = 5;
+            velX = velY = 0;
+            lastScore = 0;
+            isPaused = false;
+        }
+
+        // Move snake
+        switch (evt.keyCode) {
+            case 37: velX = -1; velY = 0; break; // Left
+            case 38: velX = 0; velY = -1; break; // Up
+            case 39: velX = 1; velY = 0; break;  // Right
+            case 40: velX = 0; velY = 1; break;  // Down
+        }
+    }
+
+    // Space bar toggles pause
+    if (evt.keyCode === 32) {
+        isPaused = !isPaused;
     }
 
     // Start music on first movement (ignore space bar)
