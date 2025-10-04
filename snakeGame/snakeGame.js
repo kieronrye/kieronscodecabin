@@ -15,6 +15,10 @@ let velX = 0, velY = 0;
 let trail = [];
 let tail = 5;
 
+// Music control
+let musicStarted = false;
+const music = document.getElementById("gameMusic");
+
 function snakeGame() {
     posX += velX;
     posY += velY;
@@ -37,6 +41,11 @@ function snakeGame() {
         // If snake eats itself → reset
         if (trail[i].x === posX && trail[i].y === posY) {
             tail = 5;
+
+            // Optional: stop music on collision
+            // music.pause();
+            // music.currentTime = 0;
+            // musicStarted = false;
         }
     }
     trail.push({ x: posX, y: posY });
@@ -64,5 +73,11 @@ function keyPush(evt) {
         case 38: velX = 0; velY = -1; break; // Up
         case 39: velX = 1; velY = 0; break;  // Right
         case 40: velX = 0; velY = 1; break;  // Down
+    }
+
+    // Start music on first movement
+    if (!musicStarted) {
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+        musicStarted = true;
     }
 }
