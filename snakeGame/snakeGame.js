@@ -17,15 +17,25 @@ let tail = 5;
 
 // Game state
 let isPaused = false;
+let isGameCompleted = false;
 let score = 0;
-let lastScore = 0; // Stores score when player dies
+let lastScore = 0;
 
 // Music control
 const music = document.getElementById("gameMusic");
 let musicStarted = false;
 
+// Win music
+const winMusic = new Audio("snakeGame/sounds/oasis.mp3");
+
 function snakeGame() {
-    if (!isPaused) {  // Only update game if not paused
+    // If game is completed, freeze everything
+    if (isGameCompleted) {
+        drawGame();
+        return;
+    }
+
+    if (!isPaused) {
         posX += velX;
         posY += velY;
 
@@ -38,9 +48,15 @@ function snakeGame() {
         // Eat apple → grow
         if (appleX === posX && appleY === posY) {
             tail++;
-            score++;  // Increment score
+            score++;
             appleX = Math.floor(Math.random() * numTiles);
             appleY = Math.floor(Math.random() * numTiles);
+
+            // ✅ Check for game completion
+            if (score >= 20) {
+                completeGame();
+                return;
+            }
         }
 
         // Move snake trail
@@ -52,19 +68,22 @@ function snakeGame() {
         // Check self-collision
         for (let i = 0; i < trail.length - 1; i++) {
             if (trail[i].x === posX && trail[i].y === posY) {
-                // Snake died → save score, reset tail, pause game
-                lastScore = score; // Save score before reset
+                lastScore = score;
                 score = 0;
                 tail = 5;
                 velX = velY = 0;
                 isPaused = true;
-                pauseMusic(); // Stop music when dead
+                pauseMusic();
                 break;
             }
         }
     }
 
-    // Draw game board
+    drawGame();
+}
+
+// Draw game board and UI
+function drawGame() {
     context.fillStyle = "black";
     context.fillRect(0, 0, 400, 400);
 
@@ -75,15 +94,27 @@ function snakeGame() {
     }
 
     // Draw apple
-    context.fillStyle = "red";
-    context.fillRect(appleX * gridSize, appleY * gridSize, gridSize - 2, gridSize - 2);
+    if (!isGameCompleted) {
+        context.fillStyle = "red";
+        context.fillRect(appleX * gridSize, appleY * gridSize, gridSize - 2, gridSize - 2);
+    }
 
     // Draw score
     context.fillStyle = "#ff00ff";
     context.font = "20px monospace";
     context.fillText("Score: " + score, 10, 30);
 
-    // Draw paused or score message
+    // Game completed
+    if (isGameCompleted) {
+        context.fillStyle = "#ff00ff";
+        context.font = "25px monospace";
+        context.fillText("YOU COMPLETED THE GAME!", 25, 200);
+        context.font = "18px monospace";
+        context.fillText("Press any arrow key to play again", 40, 230);
+        return;
+    }
+
+    // Paused or score message
     if (isPaused) {
         context.fillStyle = "#ff00ff";
         context.font = "25px monospace";
@@ -104,12 +135,18 @@ function keyPush(evt) {
 
     // Arrow key pressed
     if (arrowKeys.includes(evt.keyCode)) {
+        // Restart if game completed
+        if (isGameCompleted) {
+            resetGame();
+            return;
+        }
+
         // If game was paused after death → reset game
         if (isPaused && lastScore > 0) {
             resetGame();
         }
 
-        // If game is paused (manual or after death), unpause and start music
+        // If game is paused (manual pause or after death), unpause
         if (isPaused) {
             isPaused = false;
             playMusic();
@@ -131,7 +168,7 @@ function keyPush(evt) {
     }
 
     // Space bar toggles pause
-    if (evt.keyCode === 32) {
+    if (evt.keyCode === 32 && !isGameCompleted) {
         isPaused = !isPaused;
         if (isPaused) {
             pauseMusic();
@@ -141,7 +178,15 @@ function keyPush(evt) {
     }
 }
 
-// Reset game after death
+// Complete the game
+function completeGame() {
+    isGameCompleted = true;
+    velX = velY = 0;
+    pauseMusic();
+    winMusic.play().catch(err => console.log("Autoplay blocked:", err));
+}
+
+// Reset game
 function resetGame() {
     posX = 10;
     posY = 10;
@@ -153,6 +198,7 @@ function resetGame() {
     score = 0;
     lastScore = 0;
     isPaused = false;
+    isGameCompleted = false;
     playMusic();
 }
 
