@@ -53,7 +53,8 @@ function snakeGame() {
         for (let i = 0; i < trail.length - 1; i++) {
             if (trail[i].x === posX && trail[i].y === posY) {
                 // Snake died → save score, reset tail, pause game
-                lastScore = score; // Save the score before resetting
+                lastScore = score; // Save score before reset
+                score = 0;
                 tail = 5;
                 velX = velY = 0;
                 isPaused = true;
@@ -81,13 +82,15 @@ function snakeGame() {
     context.font = "20px monospace";
     context.fillText("Score: " + score, 10, 30);
 
-    // Draw "PAUSED" or "YOUR SCORE IS ..." if game is paused after death
+    // Draw paused or score message
     if (isPaused) {
         context.fillStyle = "#ff00ff";
         context.font = "25px monospace";
 
         if (lastScore > 0) {
-            context.fillText("YOUR SCORE IS " + lastScore, 80, 200);
+            context.fillText("YOUR SCORE IS " + lastScore, 70, 200);
+            context.font = "18px monospace";
+            context.fillText("Press an arrow key to restart", 60, 230);
         } else {
             context.fillText("PAUSED", 150, 200);
         }
@@ -98,16 +101,15 @@ function snakeGame() {
 function keyPush(evt) {
     const arrowKeys = [37, 38, 39, 40];
 
+    // Arrow key pressed
     if (arrowKeys.includes(evt.keyCode)) {
-        // If game was paused after death, reset the game
+        // If game was paused after death → reset game
         if (isPaused && lastScore > 0) {
-            score = 0;
-            trail = [];
-            posX = 10;
-            posY = 10;
-            tail = 5;
-            velX = velY = 0;
-            lastScore = 0;
+            resetGame();
+        }
+
+        // If game is paused (manual pause), unpause
+        if (isPaused) {
             isPaused = false;
         }
 
@@ -130,4 +132,18 @@ function keyPush(evt) {
         music.play().catch(err => console.log("Autoplay blocked:", err));
         musicStarted = true;
     }
+}
+
+// Reset game after death
+function resetGame() {
+    posX = 10;
+    posY = 10;
+    appleX = 15;
+    appleY = 15;
+    velX = velY = 0;
+    trail = [];
+    tail = 5;
+    score = 0;
+    lastScore = 0;
+    isPaused = false;
 }
