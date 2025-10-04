@@ -15,8 +15,9 @@ let velX = 0, velY = 0;
 let trail = [];
 let tail = 5;
 
-// Pause state
+// Game state
 let isPaused = false;
+let score = 0;
 
 // Music control
 let musicStarted = false;
@@ -36,6 +37,7 @@ function snakeGame() {
         // Eat apple → grow
         if (appleX === posX && appleY === posY) {
             tail++;
+            score++;  // Increment score
             appleX = Math.floor(Math.random() * numTiles);
             appleY = Math.floor(Math.random() * numTiles);
         }
@@ -49,13 +51,16 @@ function snakeGame() {
         // Check self-collision
         for (let i = 0; i < trail.length - 1; i++) {
             if (trail[i].x === posX && trail[i].y === posY) {
-                tail = 5; // Reset snake length
-                velX = velY = 0; // Stop movement
+                // Snake died → reset tail and pause game
+                tail = 5;
+                velX = velY = 0;
+                isPaused = true;
+                break;
             }
         }
     }
 
-    // Draw game board (always draw so last frame remains visible)
+    // Draw game board
     context.fillStyle = "black";
     context.fillRect(0, 0, 400, 400);
 
@@ -69,7 +74,12 @@ function snakeGame() {
     context.fillStyle = "red";
     context.fillRect(appleX * gridSize, appleY * gridSize, gridSize - 2, gridSize - 2);
 
-    // Optional: Display "PAUSED" text
+    // Draw score
+    context.fillStyle = "#ff00ff";
+    context.font = "20px monospace";
+    context.fillText("Score: " + score, 10, 30);
+
+    // Draw "PAUSED" if game is paused
     if (isPaused) {
         context.fillStyle = "#ff00ff";
         context.font = "30px monospace";
@@ -90,7 +100,7 @@ function keyPush(evt) {
     }
 
     // Start music on first movement
-    if (!musicStarted && evt.keyCode !== 32) { // Ignore space bar for music start
+    if (!musicStarted && evt.keyCode !== 32) { // Ignore space bar
         music.play().catch(err => console.log("Autoplay blocked:", err));
         musicStarted = true;
     }
