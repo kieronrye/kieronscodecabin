@@ -51,10 +51,11 @@ function snakeGame() {
         // Check self-collision
         for (let i = 0; i < trail.length - 1; i++) {
             if (trail[i].x === posX && trail[i].y === posY) {
-                // Snake died → reset tail and pause game
+                // Snake died → reset tail, score, and pause
                 tail = 5;
                 velX = velY = 0;
-                isPaused = true;
+                score = 0;      // Reset score
+                isPaused = true; // Pause game
                 break;
             }
         }
@@ -90,17 +91,29 @@ function snakeGame() {
 // Handle keyboard input
 function keyPush(evt) {
     switch (evt.keyCode) {
-        case 37: velX = -1; velY = 0; break; // Left
-        case 38: velX = 0; velY = -1; break; // Up
-        case 39: velX = 1; velY = 0; break;  // Right
-        case 40: velX = 0; velY = 1; break;  // Down
-        case 32:  // Space bar toggles pause
+        case 37: // Left
+            velX = -1; velY = 0;
+            if (isPaused) isPaused = false; // Unpause
+            break;
+        case 38: // Up
+            velX = 0; velY = -1;
+            if (isPaused) isPaused = false; // Unpause
+            break;
+        case 39: // Right
+            velX = 1; velY = 0;
+            if (isPaused) isPaused = false; // Unpause
+            break;
+        case 40: // Down
+            velX = 0; velY = 1;
+            if (isPaused) isPaused = false; // Unpause
+            break;
+        case 32: // Space bar toggles pause
             isPaused = !isPaused;
             break;
     }
 
-    // Start music on first movement
-    if (!musicStarted && evt.keyCode !== 32) { // Ignore space bar
+    // Start music on first movement (ignore space bar)
+    if (!musicStarted && evt.keyCode !== 32) {
         music.play().catch(err => console.log("Autoplay blocked:", err));
         musicStarted = true;
     }
