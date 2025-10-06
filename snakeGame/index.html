@@ -1,57 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="/Teletext Style CSS.css"> <!-- your Teletext style -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="/Teletext Style CSS.css">
+  <style>
+    /* Simple transition effects for resizing */
+    #gameArea, #canvasContainer, #gameCanvas, #mandImage {
+      transition: all 0.8s ease;
+    }
+  </style>
 </head>
 <body>
-    <div class="wrapper">
-        <header>
-            <h1>Snake Game</h1>
-        </header>
+  <div class="wrapper">
+    <header>
+      <h1>Snake Game</h1>
+    </header>
 
-        <nav>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="#">SnakeGame</a></li>
-            </ul>
-        </nav>
+    <nav>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="#">SnakeGame</a></li>
+      </ul>
+    </nav>
 
-        <main>
-            <!-- Section uses flexbox so image can appear beside canvas -->
-            <section style="position: relative; display: flex; align-items: flex-start; gap: 20px;">
-                <div>
-                    <h2>Play Snake</h2>
-                    <canvas id="gameCanvas" width="400" height="400" style="border:4px solid #ff00ff; background:black;"></canvas>
-                </div>
+    <main>
+      <section id="gameArea" style="display: flex; align-items: flex-start; gap: 20px;">
+        <div id="canvasContainer">
+          <h2>Play Snake</h2>
+          <canvas id="gameCanvas" width="400" height="400"
+                  style="border:4px solid #ff00ff; background:black;"></canvas>
+        </div>
 
-                <!-- Hidden image that will flash up when the music starts -->
-                <img id="mandImage" 
-                     src="/images/mand.png" 
-                     alt="Mand" 
-                     style="display:none; width:150px; height:auto; border:3px solid #ff00ff; border-radius:8px;">
-            </section>
-        </main>
+        <!-- Hidden image that appears when the game is completed -->
+        <img id="mandImage"
+             src="/images/mand.png"
+             alt="Mand"
+             style="display:none; width:150px; height:auto; border:3px solid #ff00ff; border-radius:8px;">
+      </section>
+    </main>
 
-        <footer>
-            <p>&copy; 2024 Kieron’s Website</p>
-        </footer>
-    </div>
+    <footer>
+      <p>&copy; 2024 Kieron’s Website</p>
+    </footer>
+  </div>
 
-    <!-- Background music (starts on first movement) -->
-    <audio id="gameMusic" src="sounds/MenuTheme.mp3" loop></audio>
+  <!-- Background music (starts when the snake first moves) -->
+  <audio id="gameMusic" src="sounds/MenuTheme.mp3" loop></audio>
 
-    <p>
-        Special thanks to 
-        <a href="https://github.com/FistOfHit/Snake" target="_blank" style="color:#ff00ff; text-decoration:none;">
-            FistOfHit
-        </a> 
-        for the game code
-    </p>
+  <p>
+    Special thanks to 
+    <a href="https://github.com/FistOfHit/Snake" target="_blank" style="color:#ff00ff; text-decoration:none;">
+      FistOfHit
+    </a> 
+    for the game code.
+  </p>
 
-    <!-- Import JS game file -->
-    <script src="snakeGame.js"></script>
+  <!-- Import JS game file -->
+  <script src="snakeGame.js"></script>
 </body>
 </html>
