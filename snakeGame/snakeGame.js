@@ -21,16 +21,16 @@ let isGameCompleted = false;
 let score = 0;
 let lastScore = 0;
 
-// Music control
+// DOM elements
 const music = document.getElementById("gameMusic");
-let musicStarted = false;
+const mandImage = document.getElementById("mandImage");
+const canvas = document.getElementById("gameCanvas");
+const canvasContainer = document.getElementById("canvasContainer");
 
-// ✅ Use correct relative path for win music
+// Music control
+let musicStarted = false;
 const winMusic = new Audio("sounds/oasis.mp3");
 winMusic.volume = 0.8; // optional
-
-// ✅ Get reference to the image element
-const mandImage = document.getElementById("mandImage");
 
 function snakeGame() {
     if (isGameCompleted) {
@@ -55,7 +55,7 @@ function snakeGame() {
             appleX = Math.floor(Math.random() * numTiles);
             appleY = Math.floor(Math.random() * numTiles);
 
-            // ✅ Trigger completion
+            // ✅ Trigger completion at score 20
             if (score >= 20) {
                 completeGame();
                 return;
@@ -131,6 +131,7 @@ function drawGame() {
     }
 }
 
+// Handle keyboard input
 function keyPush(evt) {
     const arrowKeys = [37, 38, 39, 40];
 
@@ -154,10 +155,10 @@ function keyPush(evt) {
 
         // Movement
         switch (evt.keyCode) {
-            case 37: velX = -1; velY = 0; break;
-            case 38: velX = 0; velY = -1; break;
-            case 39: velX = 1; velY = 0; break;
-            case 40: velX = 0; velY = 1; break;
+            case 37: velX = -1; velY = 0; break; // Left
+            case 38: velX = 0; velY = -1; break; // Up
+            case 39: velX = 1; velY = 0; break;  // Right
+            case 40: velX = 0; velY = 1; break;  // Down
         }
 
         if (!musicStarted) {
@@ -180,11 +181,16 @@ function completeGame() {
     velX = velY = 0;
     pauseMusic();
 
-    // ✅ Show image with flash animation when music starts
+    // Shrink gameplay area smoothly
+    canvas.style.width = "200px";
+    canvas.style.height = "200px";
+    canvasContainer.style.transform = "scale(0.8)";
+
+    // Show Mand image bigger
     mandImage.style.display = "block";
+    mandImage.style.width = "300px";
     mandImage.style.opacity = "0";
 
-    // Simple fade-in animation
     mandImage.animate(
         [
             { opacity: 0, transform: "scale(0.5)" },
@@ -193,7 +199,7 @@ function completeGame() {
         { duration: 800, easing: "ease-out", fill: "forwards" }
     );
 
-    // Small delay to ensure clean switch from bg music
+    // Play win music after a short delay
     setTimeout(() => {
         winMusic.currentTime = 0;
         winMusic.play().catch(err => console.log("Autoplay blocked:", err));
@@ -213,7 +219,13 @@ function resetGame() {
     lastScore = 0;
     isPaused = false;
     isGameCompleted = false;
-    mandImage.style.display = "none"; // ✅ Hide image again
+
+    // Restore original canvas size and hide image
+    canvas.style.width = "400px";
+    canvas.style.height = "400px";
+    canvasContainer.style.transform = "scale(1)";
+    mandImage.style.display = "none";
+
     playMusic();
 }
 
