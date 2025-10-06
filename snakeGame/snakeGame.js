@@ -29,6 +29,9 @@ let musicStarted = false;
 const winMusic = new Audio("sounds/oasis.mp3");
 winMusic.volume = 0.8; // optional
 
+// ✅ Get reference to the image element
+const mandImage = document.getElementById("mandImage");
+
 function snakeGame() {
     if (isGameCompleted) {
         drawGame();
@@ -177,6 +180,19 @@ function completeGame() {
     velX = velY = 0;
     pauseMusic();
 
+    // ✅ Show image with flash animation when music starts
+    mandImage.style.display = "block";
+    mandImage.style.opacity = "0";
+
+    // Simple fade-in animation
+    mandImage.animate(
+        [
+            { opacity: 0, transform: "scale(0.5)" },
+            { opacity: 1, transform: "scale(1)" }
+        ],
+        { duration: 800, easing: "ease-out", fill: "forwards" }
+    );
+
     // Small delay to ensure clean switch from bg music
     setTimeout(() => {
         winMusic.currentTime = 0;
@@ -197,6 +213,7 @@ function resetGame() {
     lastScore = 0;
     isPaused = false;
     isGameCompleted = false;
+    mandImage.style.display = "none"; // ✅ Hide image again
     playMusic();
 }
 
