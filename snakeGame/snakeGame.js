@@ -20,6 +20,7 @@ let isPaused = false;
 let isGameCompleted = false;
 let score = 0;
 let lastScore = 0;
+let hasCompletedOnce = false; // ✅ NEW FLAG to track if Mand has appeared
 
 // DOM elements
 const music = document.getElementById("gameMusic");
@@ -30,7 +31,7 @@ const canvasContainer = document.getElementById("canvasContainer");
 // Music control
 let musicStarted = false;
 const winMusic = new Audio("sounds/oasis.mp3");
-winMusic.volume = 0.8; // optional
+winMusic.volume = 0.8;
 
 function snakeGame() {
     if (isGameCompleted) {
@@ -180,6 +181,7 @@ function completeGame() {
     isGameCompleted = true;
     velX = velY = 0;
     pauseMusic();
+    hasCompletedOnce = true; // ✅ Remember that Mand should stay big next time
 
     // Shrink gameplay area smoothly
     canvas.style.width = "200px";
@@ -220,11 +222,19 @@ function resetGame() {
     isPaused = false;
     isGameCompleted = false;
 
-    // Restore original canvas size and hide image
+    // Restore original canvas size
     canvas.style.width = "400px";
     canvas.style.height = "400px";
     canvasContainer.style.transform = "scale(1)";
-    mandImage.style.display = "none";
+
+    // ✅ If Mand has appeared once, keep it visible and large
+    if (hasCompletedOnce) {
+        mandImage.style.display = "block";
+        mandImage.style.width = "300px";
+        mandImage.style.opacity = "1";
+    } else {
+        mandImage.style.display = "none";
+    }
 
     playMusic();
 }
