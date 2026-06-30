@@ -1,81 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kieron's Code Cabin</title>
-    <style>
-        /* Teletext Style CSS */
-        body {
-            background-color: black;
-            color: #00ff00; /* Bright green text */
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            line-height: 1.4;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kieron's Code Cabin</title>
 
-        .wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 4px solid #ff00ff; /* Pink border */
-        }
+<style>
+body{
+    background:black;
+    color:#00ff00;
+    font-family:"Courier New", monospace;
+    text-align:center;
+    margin:0;
+}
 
-        header h1, header h2 {
-            color: #ff00ff; /* Pink headers */
-            text-transform: uppercase;
-            margin: 0;
-            padding: 10px 0;
-        }
+.wrapper{
+    max-width:800px;
+    margin:20px auto;
+    padding:20px;
+    border:4px solid #ff00ff;
+}
 
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 20px 0;
-        }
+header h1,
+header h2{
+    color:#ff00ff;
+    text-transform:uppercase;
+    margin:10px 0;
+}
 
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
+/* Photo strip */
+.photo-strip{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:20px 0;
+    flex-wrap:nowrap;
+}
 
-        nav ul li a {
-            color: #00ff00;
-            text-decoration: none;
-        }
+.photo-strip img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border:2px solid #ff00ff;
+}
 
-        main h2 {
-            color: #ff0000; /* Red section titles */
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+/* Navigation */
 
-        main p {
-            margin-bottom: 20px;
-        }
+nav ul{
+    list-style:none;
+    padding:0;
+    margin:25px 0;
+}
 
-        img {
-            border: 4px solid #ff00ff; /* Pink border around images */
-            display: block;
-            margin: 0 auto 20px;
-        }
+nav li{
+    display:inline-block;
+    margin:0 18px;
+}
 
-        footer {
-            margin-top: 20px;
-            color: #00ffff; /* Cyan footer text */
-            border-top: 2px solid #00ffff;
-            padding-top: 10px;
-        }
-    </style>
+nav a{
+    color:#00ff00;
+    text-decoration:none;
+}
+
+nav a:hover{
+    color:#ffff00;
+}
+
+/* Main */
+
+main h2{
+    color:#ff0000;
+    text-transform:uppercase;
+}
+
+main p{
+    max-width:550px;
+    margin:15px auto;
+}
+
+/* Main picture */
+
+.profile-pic{
+    width:112px;
+    height:112px;
+    object-fit:cover;
+    border:4px solid #ff00ff;
+    margin-top:25px;
+}
+
+footer{
+    margin-top:40px;
+    padding-top:15px;
+    border-top:2px solid #00ffff;
+    color:#00ffff;
+}
+
+</style>
+
 </head>
+
 <body>
-    <div class="wrapper">
-        <header>
-            <h1>Kieron's webpage</h1>
-            <div class="photo-strip">
+
+<div class="wrapper">
+
+<header>
+
+<h1>Kieron's Webpage</h1>
+
+<div class="photo-strip">
     <img src="/images/bmx.JPG" alt="Old photo 1">
     <img src="/images/bmx.JPG" alt="Old photo 2">
     <img src="/images/bmx.JPG" alt="Old photo 3">
@@ -83,28 +115,39 @@
     <img src="/images/bmx.JPG" alt="Old photo 5">
     <img src="/images/bmx.JPG" alt="Old photo 6">
 </div>
-            <h2>This once was a prodject of mine</h2>
-        </header>
 
-        <nav>
-            <ul>
-  <li><a href="/"home class="active">Home</a></li>
-  <li><a href="/aboutmepage/">About Me</a></li>
-  <li><a href="/snakeGame/">SnakeGame</a></li>
+<h2>This once was a project of mine</h2>
+
+</header>
+
+<nav>
+<ul>
+    <li><a href="/" class="active">HOME</a></li>
+    <li><a href="/aboutmepage/">ABOUT ME</a></li>
+    <li><a href="/snakeGame/">SNAKE GAME</a></li>
 </ul>
-            
-        </nav>
+</nav>
 
-        <main>
-            <h2>Welcome to my page!</h2>
-            <p>"This website used to be my project. I decided to keep a couple of pages live.</p> <p></p>I revisit it now and then as a distraction."</p> 
-            <img src="/images/kieronpi.jpg" width="224" height="224" alt="Kieron working on a Raspberry Pi">
-        </main>
+<main>
 
-        <footer>
-            
-            <p>&copy; 2024 My Website</p>
-        </footer>
-    </div>
+<h2>Welcome to my page!</h2>
+
+<p>
+This website used to be my project. I decided to keep a couple of pages
+live. I revisit it now and then as a distraction.
+</p>
+
+<img class="profile-pic"
+     src="/images/kieronpi.jpg"
+     alt="Kieron working on a Raspberry Pi">
+
+</main>
+
+<footer>
+<p>&copy; 2024 My Website</p>
+</footer>
+
+</div>
+
 </body>
 </html>
