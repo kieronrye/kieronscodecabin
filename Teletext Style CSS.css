@@ -71,3 +71,19 @@ footer {
     overflow-x: auto; /* allows scrolling if it overflows */
     padding: 10px 0;
 }
+img {
+    border: 4px solid #ff00ff;
+    display: block;
+    margin: 0 auto 20px;
+}
+    img {
+    border: 4px solid #ff00ff;
+}
+
+.photo-strip img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0;
+}
