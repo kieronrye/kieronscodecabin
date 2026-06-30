@@ -62,3 +62,12 @@ footer {
     color: #00ffff; /* Cyan footer text */
     border-top: 2px solid #00ffff;
     padding-top: 10px;
+.photo-strip {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center; /* or flex-start if you want it left aligned */
+    align-items: center;
+    overflow-x: auto; /* allows scrolling if it overflows */
+    padding: 10px 0;
+}
