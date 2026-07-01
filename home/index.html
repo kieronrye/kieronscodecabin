@@ -32,16 +32,23 @@ header h2{
 .photo-strip{
     display:flex;
     justify-content:center;
-    gap:8px;
-    margin:20px 0;
+    gap:0;
+    margin:20px auto;
     flex-wrap:nowrap;
+    border:2px solid #ff00ff;
+    width:fit-content;
 }
 
 .photo-strip img{
     width:90px;
     height:90px;
     object-fit:cover;
-    border:2px solid #ff00ff;
+    display:block;
+    border-right:2px solid #ff00ff;
+}
+
+.photo-strip img:last-child{
+    border-right:none;
 }
 
 /* Navigation */
